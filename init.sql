@@ -1,0 +1,11 @@
+CREATE TABLE IF NOT EXISTS artists (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(255) NOT NULL UNIQUE
+);
+
+CREATE TABLE IF NOT EXISTS songs (
+    id SERIAL PRIMARY KEY,
+    artist_id INTEGER REFERENCES artists(id),
+    title VARCHAR(255) NOT NULL,
+    content TEXT NOT NULL
+);

@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guitar Practice Club</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🎸 Guitar Practice Club</h1>
+            <p>Умный гармонический тренажер и интерактивный метроном для гитаристов</p>
+        </header>
+
+        <!-- 1. УМНЫЙ ГЕНЕРАТОР АККОРДОВ -->
+        <div class="section">
+            <h2>Генератор аккордов по законам гармонии</h2>
+            <div class="flex-group">
+                <div>
+                    <label>Тональность:</label><br>
+                    <select id="chordKey">
+                        <option value="">Любая (Случайно)</option>
+                        <option value="Am">Am (ля-минор)</option>
+                        <option value="C">C (до-мажор)</option>
+                        <option value="G">G (соль-мажор)</option>
+                        <option value="Em">Em (ми-минор)</option>
+                    </select>
+                </div>
+                <div>
+                    <label>Настроение:</label><br>
+                    <select id="chordMood">
+                        <option value="random">Хаос (Абсолютно случайно)</option>
+                        <option value="happy">Веселое (Поп-цепочки)</option>
+                        <option value="sad">Грустное (Лирика)</option>
+                        <option value="epic">Эпическое</option>
+                        <option value="jazz">Джазовое (ii-V-I)</option>
+                    </select>
+                </div>
+                <div>
+                    <label>Сложность:</label><br>
+                    <select id="chordLevel">
+                        <option value="easy">Без баррэ (Easy)</option>
+                        <option value="hard">С баррэ (Hard)</option>
+                    </select>
+                </div>
+                <div>
+                    <label>Количество:</label><br>
+                    <input type="number" id="chordLength" value="4" min="2" max="10" style="width: 70px;">
+                </div>
+                <div style="padding-top: 20px;">
+                    <button onclick="generateChords()">Сгенерировать</button>
+                </div>
+            </div>
+
+            <!-- ИНСТРУМЕНТЫ ТРАНСПОНИРОВАНИЯ И КАПОДАСТРА -->
+            <div class="flex-group" style="margin-top: 15px; background: #202024; padding: 15px; border-radius: 6px;">
+                <div>
+                    <label>Транспонировать цепочку:</label><br>
+                    <button onclick="transposeChords(-1)" style="padding: 6px 14px; background: #ff4d4d; margin-top:5px;">-1 Полутон</button>
+                    <button onclick="transposeChords(1)" style="padding: 6px 14px; background: #ffb64d; color:#121214; margin-top:5px;">+1 Полутон</button>
+                </div>
+                <div style="margin-left: auto;">
+                    <label>Виртуальный каподастр (Лад):</label><br>
+                    <input type="number" id="capoFret" value="0" min="0" max="9" style="width: 70px; padding: 6px; margin-top:5px;" onchange="applyCapoShift()">
+                </div>
+            </div>
+
+            <div id="chordsResult"></div>
+            
+            <div style="text-align: right; margin-top: 10px;">
+                <button onclick="saveCurrentSequence()" style="background: #29292e; color: #00adb5; border: 1px solid #00adb5; padding: 6px 14px; font-size: 0.85rem;">⭐ Сохранить эту цепочку</button>
+            </div>
+        </div>
+
+        <!-- 2. ГЕНЕРАТОР БОЯ И ПЕРЕБОРОВ -->
+        <div class="section">
+            <h2>Генератор аккомпанемента</h2>
+            <div class="flex-group">
+                <div>
+                    <label>Тип гитарной текстуры:</label><br>
+                    <select id="strumType">
+                        <option value="all">Любой рисунок боя</option>
+                        <option value="44">Размер 4/4 (Эстрадный, Шестерка)</option>
+                        <option value="34">Размер 3/4 (Вальсовый)</option>
+                    </select>
+                </div>
+                <div style="padding-top: 20px;">
+                    <button onclick="generateStrum()">Сгенерировать ритм</button>
+                </div>
+            </div>
+            <div id="strumResult" style="text-align: center; font-size: 1.4rem; font-weight: 600; color: #ffb64d; margin-top: 15px; letter-spacing: 2px;"></div>
+        </div>
+
+                <!-- 3. ИНТЕРАКТИВНЫЙ ТРЕНАЖЕР ПРАКТИКИ -->
+        <div class="section">
+            <h2>Интерактивный режим тренировки (Таймер / Разгон)</h2>
+            <div class="flex-group">
+                <div>
+                    <label>Режим смены аккордов:</label><br>
+                    <select id="practiceMode" onchange="togglePracticeFields()">
+                        <option value="metronome">По долям метронома (BPM)</option>
+                        <option value="timer">По времени (Каждые X секунд)</option>
+                    </select>
+                </div>
+                <div>
+                    <label>Начальный темп (BPM):</label><br>
+                    <input type="number" id="bpmInput" value="120" min="40" max="250" style="width: 90px;">
+                </div>
+                
+                <div id="secondsField" style="display: none;">
+                    <label>Интервал смены (Сек):</label><br>
+                    <input type="number" id="secondsInput" value="4" min="1" max="20" style="width: 80px;">
+                </div>
+                <div id="timeBpmField" style="display: none;">
+                    <label>Прибавлять +5 BPM каждые (Сек):</label><br>
+                    <input type="number" id="timeBpmInput" value="10" min="2" max="120" style="width: 100px; border-color: #ffb64d;">
+                </div>
+                
+                <div style="padding-top: 20px; margin-left: auto;">
+                    <button id="metronomeBtn" onclick="togglePracticeRoutine()">Старт тренировки</button>
+                </div>
+            </div>
+
+            <!-- Визуальный индикатор ритма -->
+            <div id="visualBeatIndicator" style="width: 100%; height: 8px; background: #202024; border-radius: 4px; overflow: hidden; margin-top: 15px; border: 1px solid #29292e;">
+                <div id="beatProgressBar" style="width: 0%; height: 100%; background: #00adb5;"></div>
+            </div>
+        </div>
+
+
+
+        <!-- 4. ИСТОРИЯ УСПЕШНЫХ ТРЕНИРОВОК -->
+        <div class="section">
+            <h2>Последние сохраненные цепочки аккордов</h2>
+            <div id="historyResult" style="color: #a8a8b3; font-size: 0.95rem;">Загрузка истории...</div>
+        </div>
+    </div>
+
+    <script src="/app.js"></script>
+</body>
+</html>
+

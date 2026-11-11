@@ -1,0 +1,45 @@
+services:
+  
+  web-app:
+    build: .
+    container_name: guitar_web_app
+    ports:
+      - "8085:8085"
+    environment:
+      - PORT=8085
+      
+      - DATABASE_URL=postgres://guitar_user:guitar_pass@postgres_db:5432/guitar_db?sslmode=disable
+      - REDIS_URL=redis://redis_cache:6379/0
+    depends_on:
+      - postgres_db
+      - redis_cache
+
+  # 2. Изолированная база данных PostgreSQL
+  postgres_db:
+    image: postgres:16-alpine
+    container_name: guitar_postgres
+    restart: always
+    environment:
+      - POSTGRES_USER=guitar_user
+      - POSTGRES_PASSWORD=guitar_pass
+      - POSTGRES_DB=guitar_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      # Автоматически создаем таблицы структуры при самом первом запуске контейнера
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+
+  # 3. Кэш-сервер Redis в оперативной памяти
+  redis_cache:
+    image: redis:7-alpine
+    container_name: guitar_redis
+    restart: always
+    ports:
+      - "6379:6379"
+    volumes:
+      - redisdata:/data
+
+volumes:
+  pgdata:
+  redisdata:

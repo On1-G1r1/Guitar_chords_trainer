@@ -1,0 +1,263 @@
+
+.lyrics-container {
+    background: #121214;
+    padding: 30px;
+    border-radius: 8px;
+    font-size: 1.2rem;
+    color: #e1e1e6;
+    max-height: 450px; 
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+    text-align: center;
+}
+.chord-box { 
+    display: inline-block; 
+    background: #29292e; 
+    color: #00adb5; 
+    font-size: 2rem; 
+    font-weight: 700; 
+    padding: 15px 25px; 
+    margin: 10px; 
+    border-radius: 8px; 
+    border: 2px solid #00adb5; 
+    box-shadow: 0 4px 10px rgba(0, 173, 181, 0.1); 
+    transition: all 0.2s ease-out; /* Плавное затухание после вспышки */
+}
+
+.chord-box.active-chord-pulse {
+    border-color: #ffb64d !important; /* Оранжевая рамка фокуса */
+    color: #b7effc !important;        /* Яркий бирюзовый цвет текста */
+    background: #1f2d3d !important;   /* Темно-синий фон активной карточки */
+    animation: neonPulseFlash 0.15s ease-out forwards;
+}
+
+@keyframes neonPulseFlash {
+    0% {
+        transform: scale(1.02);
+        box-shadow: 0 0 8px rgba(0, 173, 181, 0.4), 
+                    0 0 20px rgba(0, 173, 181, 0.6);
+    }
+    50% {
+        transform: scale(1.08); 
+        box-shadow: 0 0 15px rgba(0, 173, 181, 0.8), 
+                    0 0 35px rgba(0, 173, 181, 1),
+                    0 0 50px rgba(255, 182, 77, 0.5); 
+    }
+    100% {
+        transform: scale(1.05);
+        box-shadow: 0 0 10px rgba(0, 173, 181, 0.5), 
+                    0 0 25px rgba(0, 173, 181, 0.4);
+    }
+}
+
+
+/* Стилизация строки песни */
+.lyrics-line {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: all 0.3s ease;
+    opacity: 0.4; 
+}
+
+/* Аккорд над строкой */
+.line-chord {
+    color: #00adb5;
+    font-weight: bold;
+    font-size: 1rem;
+    background: rgba(0, 173, 181, 0.1);
+    padding: 2px 8px;
+    border-radius: 4px;
+    margin-bottom: 5px;
+    border: 1px solid rgba(0, 173, 181, 0.2);
+}
+
+.line-text {
+    color: #e1e1e6;
+}
+
+/* Эффект подсветки строки */
+.lyrics-line.active-line-highlight {
+    opacity: 1;
+    transform: scale(1.08);
+}
+
+.lyrics-line.active-line-highlight .line-chord {
+    background: #00adb5;
+    color: #121214;
+    box-shadow: 0 0 10px rgba(0, 173, 181, 0.6);
+}
+
+.lyrics-line.active-line-highlight .line-text {
+    color: #ffb64d;
+    font-weight: 600;
+}
+
+.chords-diagrams-container {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    margin-top: 30px;
+    padding-top: 20px;
+    border-top: 1px solid #29292e;
+    justify-content: center; 
+}
+
+.diagram-card {
+    background: #202024;
+    padding: 15px;
+    border-radius: 8px;
+    text-align: center;
+    border: 1px solid #29292e;
+}
+
+.diagram-card h5 {
+    color: #00adb5;
+    font-size: 1.1rem;
+    margin-bottom: 10px;
+}
+
+* { 
+    box-sizing: border-box; 
+    margin: 0; 
+    padding: 0; 
+    font-family: 'Montserrat', sans-serif; 
+}
+
+body { 
+    background-color: #121214; 
+    color: #e1e1e6; 
+    padding: 40px 20px; 
+    display: flex; 
+    justify-content: center; 
+}
+
+.container { 
+    max-width: 1000px; 
+    width: 100%; 
+}
+
+header { 
+    text-align: center; 
+    margin-bottom: 40px; 
+}
+
+header h1 { 
+    color: #00adb5; 
+    font-size: 2.5rem; 
+    margin-bottom: 10px; 
+}
+
+.section { 
+    background: #1a1a1e; 
+    padding: 30px; 
+    border-radius: 12px; 
+    margin-bottom: 30px; 
+    border: 1px solid #29292e; 
+}
+
+h2 { 
+    color: #fff; 
+    margin-bottom: 20px; 
+    font-size: 1.5rem; 
+    border-bottom: 2px solid #00adb5; 
+    padding-bottom: 8px; 
+    inline-size: max-content;
+}
+
+.flex-group { 
+    display: flex; 
+    gap: 15px; 
+    flex-wrap: wrap; 
+    margin-bottom: 20px; 
+    align-items: center; 
+}
+
+label { 
+    font-size: 0.9rem; 
+    color: #a8a8b3; 
+}
+
+select, input, textarea { 
+    background: #202024; 
+    border: 1px solid #29292e; 
+    color: #fff; 
+    padding: 12px; 
+    border-radius: 6px; 
+    font-size: 1rem; 
+}
+
+select:focus, input:focus, textarea:focus { 
+    border-color: #00adb5; 
+    outline: none; 
+}
+
+button { 
+    background: #00adb5; 
+    color: #fff; 
+    border: none; 
+    padding: 12px 24px; 
+    border-radius: 6px; 
+    font-weight: 600; 
+    cursor: pointer; 
+    transition: background 0.2s; 
+}
+
+button:hover { 
+    background: #008c95; 
+}
+
+.chord-box { 
+    display: inline-block; 
+    background: #29292e; 
+    color: #00adb5; 
+    font-size: 2rem; 
+    font-weight: 700; 
+    padding: 15px 25px; 
+    margin: 10px; 
+    border-radius: 8px; 
+    border: 2px solid #00adb5; 
+    box-shadow: 0 4px 10px rgba(0,173,181,0.2); 
+}
+
+#chordsResult { 
+    text-align: center; 
+    min-height: 80px; 
+    margin-top: 20px; 
+}
+
+.song-card { 
+    background: #202024; 
+    padding: 20px; 
+    border-radius: 8px; 
+    margin-top: 15px; 
+    border-left: 4px solid #00adb5; 
+}
+
+.song-card h3 { 
+    color: #fff; 
+    margin-bottom: 5px; 
+}
+
+.song-card h4 { 
+    color: #a8a8b3; 
+    font-weight: 400; 
+    margin-bottom: 15px; 
+}
+
+pre { 
+    background: #121214; 
+    padding: 15px; 
+    border-radius: 6px; 
+    overflow-x: auto; 
+    font-family: monospace; 
+    font-size: 1.1rem; 
+    color: #ffb64d; 
+    white-space: pre-wrap; 
+}
+
+.w-100 { 
+    width: 100%; 
+}
